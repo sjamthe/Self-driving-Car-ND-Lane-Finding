@@ -15,6 +15,13 @@ thus doubling the strength of yellow color. They apply greyscale, gaussian blur 
 <LI> For the right lane we expect slope > 0.5, we also expect the topmost part of the right lane never cross 0.3*image width (limit lower slopes again - this may be redundant if we do the math right, also check that the top intercept of right lane is on the left half of image - another trial an error number which may vary based on camera angle!)
 <LI> The bottom of the lane should be between 70% and 100% of the imagewidth - again dependent on the camera mount position, but fair assumption I guess.
 <LI> For left lane the slope should be &lt; -0.5 but the intercept and the bottom of the lane should be inside the image!.
-<LI> The top of the lane should be no more than 70% of the image. This again may be similar to slope  &lt; -0.5 if we know image size.
+<LI> The top of the left lane should be no more than 70% of the image. This again may be similar to slope  &lt; -0.5 if we know image size.
 </OL>
+<LI> For all the houghlines we selected above we extend them to the top of the image and bottom of the image. We store these two x values along with how high the line is and how close to the car the line is.
+<LI> All these lines are stored (seperately for left and right lanes) for last n images (n = 10). We don't draw lanes based on only one image but last 'n' images. This way we make sure that images that have missing lanes also have lane marking.
+<LI> For all the lines found for each lane in last n images we find median and std for the bottom and top intercept for each lane.
+<LI><B>Ignore lines that are too far from median</B> If the std/median is > 0.15 and the line's bottom intercept is further than std from median we ignore that line. 
+<LI>For all the lines that were selected we do a weighted average for the top and bottom intercept. The weights are how tall the line is and how close to the bottom it is. <b>This finally gives us the lanes </b>
+<LI> Sometimes some strong lines on the road (or the edge of divider) may look like a lane. So we do a final check. We know car cannot jump abruptly so we compare the new lane with previous lane. If the left bottom of the lane has jumped for 100 points or more we choose the prev lane and ignore the new lane!
+
 </UL>
