@@ -22,6 +22,6 @@ thus doubling the strength of yellow color. They apply greyscale, gaussian blur 
 <LI> For all the lines found for each lane in last n images we find median and std for the bottom and top intercept for each lane.
 <LI><B>Ignore lines that are too far from median</B> If the std/median is > 0.15 and the line's bottom intercept is further than std from median we ignore that line. 
 <LI>For all the lines that were selected we do a weighted average for the top and bottom intercept. The weights are how tall the line is and how close to the bottom it is. <b>This finally gives us the lanes </b>
-<LI> Sometimes some strong lines on the road (or the edge of divider) may look like a lane. So we do a final check. We know car cannot jump abruptly so we compare the new lane with previous lane. If the left bottom of the lane has jumped for 100 points or more we choose the prev lane and ignore the new lane!
+<LI> Sometimes some strong lines on the road (or the edge of divider) may look like a lane. So we do a <b>final check</b>. We know car cannot jump abruptly so we compare the new lane with previous lane. If the left bottom of the lane has jumped for 100 points or more we choose the prev lane and ignore the new lane!
 
 </UL>
